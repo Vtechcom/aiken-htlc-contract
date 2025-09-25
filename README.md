@@ -148,5 +148,15 @@ aiken fmt
 
 Nếu bạn gặp vấn đề gì, hãy tạo issue trên repository này nhé! 😊
 
+## Liên quan (Related Links)
+
+### Tài liệu kỹ thuật (Technical Documentation)
+- 🔗 [Interledger RFC - Hashed Timelock Agreements](https://interledger.org/developers/rfcs/hashed-timelock-agreements/) - Đặc tả kỹ thuật HTLC
+- 🔗 [eUTXO L2 Interoperability](https://cardano-scaling.github.io/eutxo-l2-interop/index.html) - Khả năng tương tác giữa các Layer 2
+- 🔗 [eUTXO L2 Interop - Milestone 1](https://cardano-scaling.github.io/eutxo-l2-interop/ms1/index.html) - Chi tiết implementation
+
+### GitHub Issues & Discussions
+- 🔗 [Hydra Issue #2080](https://github.com/cardano-scaling/hydra/issues/2080) - Thảo luận về HTLC implementation
+
 ---
 Made with ❤️ by Ania
