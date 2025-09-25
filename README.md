@@ -4,6 +4,8 @@
 
 HTLC (Hash Time Locked Contract) là một smart contract cho phép thực hiện giao dịch có điều kiện với khóa thời gian và hash lock. Contract này được viết bằng Aiken cho Cardano blockchain.
 
+**Repo này được viết lại dựa trên https://github.com/AngeYobo/htlc-contract-aiken.git với aiken v1.1.17 và aiken-lang/stdlib v2.2.0**
+
 ## Tính năng (Features)
 
 - ✅ Hash Lock: Khóa giao dịch bằng hash
@@ -33,45 +35,30 @@ aiken build
 aiken build
 ```
 
-### 2. Apply Parameters vào Contract
-
-Để áp dụng parameters (tham số) vào contract, chạy lệnh:
+### 2. Convert Contract sang Plutus Script
 
 ```bash
-aiken blueprint apply
+# Windows PowerShell
+.\compile.ps1
+
+# Hoặc Linux/Mac bash
+./compile.sh
 ```
 
-Terminal sẽ yêu cầu bạn nhập parameter:
-
-```
-aiken blueprint apply
-  Analyzing blueprint
->      Asking VerificationKeyHash (a byte-array): ___
-```
-
-Nhập giá trị VerificationKeyHash (public key hash của bạn) và nhấn Enter:
-
-```
-aiken blueprint apply
-    Analyzing blueprint
->      Asking VerificationKeyHash (a byte-array): 581ce06f2ae361f33815f775b224789025dccc4b6413599224e70841eebf
-     Applying 581ce06f2ae361f33815f775b224789025dccc4b6413599224e70841eebf
-```
-
-Kết quả sẽ tạo ra một blueprint với compiled code đã được apply parameters, chứa thông tin:
-- Validator hash
-- Compiled code với parameters
-- Schema định nghĩa cho datum và redeemer
+Script sẽ tự động:
+- Build contract với `aiken build`
+- Convert validator sang JSON format
+- Lưu kết quả tại `.output/htlc_validator.plutus.json`
 
 ### 3. Deploy Contract lên Testnet
 
 ```bash
-# Generate validator script
-aiken blueprint convert -v htlc_validator > htlc.plutus
+# Generate validator script từ file đã convert
+cp .output/htlc_validator.plutus.json htlc.plutus.json
 
 # Tạo script address
 cardano-cli address build \
-  --payment-script-file htlc.plutus \
+  --payment-script-file htlc.plutus.json \
   --testnet-magic 1097911063 \
   --out-file htlc.addr
 ```
@@ -106,7 +93,7 @@ cardano-cli transaction submit \
 # Unlock với secret
 cardano-cli transaction build \
   --tx-in <SCRIPT_UTXO> \
-  --tx-in-script-file htlc.plutus \
+  --tx-in-script-file htlc.plutus.json \
   --tx-in-datum-file datum.json \
   --tx-in-redeemer-file redeemer.json \
   --tx-out <BENEFICIARY_ADDRESS>+<AMOUNT> \
@@ -155,7 +142,7 @@ aiken fmt
 - 🔒 Giữ secret an toàn cho đến khi claim
 - ⏰ Chú ý deadline để tránh mất tiền
 - 💡 Luôn kiểm tra datum và redeemer format
-- 📝 Apply parameters trước khi deploy để có địa chỉ script chính xác
+- 📝 Contract không cần apply parameters, sẵn sàng deploy ngay sau khi build
 
 ## Hỗ trợ (Support)
 
