@@ -159,4 +159,4 @@ Nếu bạn gặp vấn đề gì, hãy tạo issue trên repository này nhé! 
 - 🔗 [Hydra Issue #2080](https://github.com/cardano-scaling/hydra/issues/2080) - Thảo luận về HTLC implementation
 
 ---
-Made with ❤️ by Ania
+Made with ❤️ by Ania from VTechcom Lab 
